@@ -2,11 +2,56 @@
 
 <h3 class="text-center">Add the Player Here</h3>
 
-<video
-  data-video-id="5439721792001"
+<video id="myPlayerID"
+  data-video-id="5440119354001"
   data-account="5425749958001"
-  data-player="default"
+  data-player="SktrNhigb"
   data-embed="default"
   data-application-id=""
   class="video-js" controls></video>
-<script src="//players.brightcove.net/5425749958001/default_default/index.min.js"></script>
+<script src="//players.brightcove.net/5425749958001/SktrNhigb_default/index.min.js"></script>
+
+<script src="//players.brightcove.net/videojs-overlay/1/videojs-overlay.min.js"></script>
+
+
+<script type="text/javascript">
+  videojs('myPlayerID').ready(function(){
+    var myPlayer = this,
+    showOverlay = false;
+
+    myPlayer.overlay({
+        overlays: [{
+          "start": "loadstart",
+          "end": "ended",
+          "content": "<img src='http://solutions.brightcove.com/bcls/assets/images/please-stand-by.png'>"
+        }]
+      });
+
+    myPlayer.errors({
+      'errors': {
+        '4': {
+          'headline': 'The Live Event you are trying to watch is either unavailable or has not started',
+          'type': 'MEDIA_UNAVAILABLE',
+        }
+      }
+    });
+
+    myPlayer.on("error", function(err) {
+      var errNo = myPlayer.error().code;
+      var duration = myPlayer.duration();
+      if (((errNo == '2') && (duration =='0')) || (errNo == '4') && (duration == '0')) {
+        showOverlay = true;
+      }
+      if (showOverlay) {
+          // hide error dialog message
+        myPlayer.error(null);
+        // show overlay image
+        myPlayer.removeClass("hide-overlay");
+      } else {
+        // hide overlay image
+        myPlayer.addClass("hide-overlay");
+      }
+    })
+
+  });
+</script>
