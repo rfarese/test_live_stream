@@ -8,11 +8,11 @@
   data-player="SktrNhigb"
   data-embed="default"
   data-application-id=""
-  class="video-js" controls></video>
+  class="video-js" controls>
+</video>
 <script src="//players.brightcove.net/5425749958001/SktrNhigb_default/index.min.js"></script>
 
 <script src="//players.brightcove.net/videojs-overlay/1/videojs-overlay.min.js"></script>
-
 
 <script type="text/javascript">
   videojs('myPlayerID').ready(function(){
@@ -21,6 +21,9 @@
 
     myPlayer.overlay({
         overlays: [{
+          // I believe these are incorrect
+          // we want to end on loadstart
+          // and end on error 
           "start": "loadstart",
           "end": "ended",
           "content": "<img src='http://solutions.brightcove.com/bcls/assets/images/please-stand-by.png'>"
